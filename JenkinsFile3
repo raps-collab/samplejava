@@ -26,7 +26,7 @@ pipeline {
     			echo "GIT branch is ${env.GIT_BRANCH}"
                 echo "globalprops -- ${env.snartifacttoolId} -- ${env.snhost} -- ${env.snuser} -- ${env.snpassword} ";
     	
-                snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "build"}""")            
+                snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"attemptNumber" :1,"stageName": "build"}""")            
 
             }
        }
@@ -34,7 +34,7 @@ pipeline {
         stage("stage") {
              
             steps{
-    		     snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "stage"}""")            
+    		     snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"attemptNumber" :1,"stageName": "stage"}""")            
 
             }
                 
@@ -43,7 +43,6 @@ pipeline {
         stage("deploy") {
              
             steps{
-                 snDevOpsChange()
                  echo "Change request created. Deploy in prod"
 			     echo "deploy in prod"
             }
