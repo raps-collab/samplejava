@@ -9,8 +9,8 @@ pipeline {
         stage('CI') {
             steps {
               echo 'running CI'
-              sh '/usr/local/bin/mvn compile'
-              sh '/usr/local/bin/mvn verify'
+              sh '/var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/Maven/bin/mvn compile'
+              sh '/var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/Maven/bin/mvn verify'
         	}
             post {
                 always {
@@ -41,7 +41,7 @@ pipeline {
         stage('UAT deploy') {
             steps {
 		            echo 'running UAT deploy'
-                sh '/usr/local/bin/mvn package'
+                sh '/var/jenkins_home/tools/hudson.tasks.Maven_MavenInstallation/Maven/bin/mvn package'
 		            snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "${artifactName}","version":"${artifactVersion}","semanticVersion": "${artifactSemVersion}","repositoryName": "${repoName}"}]}""")
 	    	   }
         }

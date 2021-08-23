@@ -1,49 +1,37 @@
+trigger:
+ - master
+
+pool:
+  vmImage: 'ubuntu-latest'
 
 stages:
-- stage: One
-  jobs:
-  # Set an output variable from a deployment
-  - job: A
-    steps:
-    - task: Bash@3
-      name: ChangeRegistration
-      inputs:
-        targetType: 'inline'
-        script: |
-          changeRegistration=$(curl -s -X POST https://devops.integration.user:devops@mohancli.service-now.com//api/sn_devops/v1/devops/orchestration/changeRegistration -H "Accept: application/json" | jq -r  '.result.changeNumber') 2>&1
-          echo "${changeRegistration}"
-          echo "##vso[task.setvariable variable=changeNumber;isOutput=true]$changeRegistration"
-    - bash: echo $(ChangeRegistration.changeNumber)
-      name: echovar
-    - task: ServiceNow-DevOps-Agent-Change-Registration@1
-      name: CustomChangeRegistration
-      inputs:
-        connectedServiceName: 'MohanCli'
-  # Map the variable from the job for the first slice
-  - job: B
-    dependsOn: A
-    variables:
-      changeNumber: $[ dependencies.A.outputs['ChangeRegistration.changeNumber'] ]
-    steps:
-    - bash: "echo $(changeNumber)"
-      name: echovar
-
-- stage: Two
-  dependsOn: One
-  jobs:
-  # Set an output variable from a deployment
-  - job: C
-    variables:
-      # map the output variable from A into this job
-      changeNumber: $[ stageDependencies.One.A.outputs['ChangeRegistration.changeNumber'] ]
-    steps:
-    - script: echo $(changeNumber)
-
-  # Map the variable from the job for the first slice
-  - job: D
-    dependsOn: C
-    variables:
-      changeRegistrationNumber: $[ stageDependencies.One.A.outputs['CustomChangeRegistration.changeRegistrationResponse'] ]
-    steps:
-    - bash: echo $(changeRegistrationNumber)
-      name: echovar
+    - stage: Build
+      jobs:
+          - job: 'BuildJob'
+            steps:
+            - task: Bash@3
+              inputs:
+                targetType: 'inline'
+                script: |
+                  # Write your commands here                  
+                  echo 'Hello world'
+    - stage: Test
+      jobs:
+          - job: 'TestJob'
+            steps:
+            - task: Bash@3
+              inputs:
+                targetType: 'inline'
+                script: |
+                  # Write your commands here                  
+                  echo 'Hello world'
+    - stage: Deploy
+      jobs:
+          - job: 'DeployJob'
+            steps:
+            - task: Bash@3
+              inputs:
+                targetType: 'inline'
+                script: |
+                  # Write your commands here                  
+                  echo 'Prod Successful'
