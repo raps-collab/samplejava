@@ -47,9 +47,8 @@ pipeline {
         }
         stage('UAT test') {
           	steps {
-                echo 'running UAT deploy'
-                snDevOpsChange()
-		        }
+        	        kube 'running UAT deploy'
+	        }
         }
 	}
 }
