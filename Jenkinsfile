@@ -48,6 +48,7 @@ pipeline {
         stage('UAT test') {
           	steps {
         	        kube 'running UAT deploy'
+			kube 'running PROD deploy'
 	        }
         }
 	}
