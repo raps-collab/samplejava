@@ -9,14 +9,14 @@ pipeline {
         stage('CI') {
             steps {
               echo 'running CI'
-              sh '/usr/local/bin/mvn compile'
-              sh '/usr/local/bin/mvn verify'
+              //sh '/usr/local/bin/mvn compile'
+              //sh '/usr/local/bin/mvn verify'
         	}
-            post {
-                always {
-                    junit '**/target/surefire-reports/*.xml' 
-                }
-            }
+            //post {
+              //  always {
+                //    junit '**/target/surefire-reports/*.xml' 
+                //}
+            //}
         }
        
 	stage('TestSonarChanges') {
