@@ -20,7 +20,7 @@ pipeline {
         }
        
 	stage('TestSonarChanges') {
-	    environment {
+	    /*environment {
     		 SCANNER_HOME = tool 'sonarScanner'
    		 //ORGANIZATION = "igorstojanovski-github"
     		 //PROJECT_NAME = "igorstojanovski_jenkins-pipeline-as-code"
@@ -36,20 +36,20 @@ pipeline {
 			       sh '${SCANNER_HOME}/bin/sonar-scanner -Dproject.settings=${SCANNER_HOME}/conf/sonar-scanner.properties'
 
 		}
-	      }
+	      }*/
     	}
         stage('UAT deploy') {
-            steps {
+            /*steps {
 		            echo 'running UAT deploy'
                 sh '/usr/local/bin/mvn package'
 		            snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "${artifactName}","version":"${artifactVersion}","semanticVersion": "${artifactSemVersion}","repositoryName": "${repoName}"}]}""")
-	    	   }
+	    	   }*/
         }
         stage('UAT test') {
-          	steps {
+          	/*steps {
         	        kube 'running UAT deploy'
 			kube 'running PROD deploy'
-	        }
+	        }*/
         }
 	}
 }
