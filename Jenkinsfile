@@ -53,6 +53,7 @@ pipeline {
         }
         stage('UAT test') {
 		steps {
+		    kube 'runnig UAT deploy'
 		    echo 'UAT test'
 		}	
 		/*steps {
